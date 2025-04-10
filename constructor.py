@@ -10,6 +10,7 @@ class person:
         
 
 if __name__ == "__main__":
+    
     p1=person("john",25)
     p2=person("jane",30)
 
