@@ -1,0 +1,23 @@
+<h2>{{ post.title }}</h2>
+<p>{{ post.content }}</p>
+
+<h3>Comments:</h3>
+{% for comment in post.comments.all %}
+    <p>{{ comment.author.username }} said: {{ comment.content }}</p>
+    {% if comment.author == user %}
+        <a href="{% url 'delete_comment' comment.pk %}">Delete</a>
+    {% endif %}
+{% empty %}
+    <p>No comments yet. Be the first to comment!</p>
+{% endfor %}
+
+{% if user.is_authenticated %}
+    <h3>Add a Comment:</h3>
+    <form method="POST" action="{% url 'post_comment' post.pk %}">
+        {% csrf_token %}
+        <textarea id="content" name="content" placeholder="Write your comment here..."></textarea>
+       
+    </form>
+{% else %}
+    <p>You must be logged in to post a comment.</p>
+{% endif %}
